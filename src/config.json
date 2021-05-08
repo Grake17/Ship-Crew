@@ -1,0 +1,14 @@
+{
+    "permission": {
+        "Kirito": "284329971466633217",
+        "Ivan": "",
+        "Kri": "454672604268331042",
+        "Grake": "275029345200766977"
+    },
+    "bot_setting":{
+        "color": "0xeb5234",
+        "author": "Hector v0.5"        
+    },
+    "command_channel": "840555922987155457"
+    
+}
