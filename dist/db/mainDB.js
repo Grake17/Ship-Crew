@@ -50,44 +50,50 @@ var sequelize_1 = require("sequelize");
 var crew_ship_model_1 = __importDefault(require("./models/CrewShip/crew_ship_model"));
 // Import Users Model
 var users_model_1 = __importDefault(require("./models/Users/users_model"));
-var crews_model_1 = __importDefault(require("./models/Crews/crews_model"));
 // Import Crews Model
+var crews_model_1 = __importDefault(require("./models/Crews/crews_model"));
 // Export Function DB
 function load_db() {
     return __awaiter(this, void 0, void 0, function () {
-        var env, sequelize, crew_ship_table, users_table, crews_table, tables;
         return __generator(this, function (_a) {
-            env = env_1.env_var();
-            // Check value If Undefind
-            if (!env.database || !env.user_db)
-                return [2 /*return*/];
-            sequelize = new sequelize_1.Sequelize(env.database, env.user_db, env.password_db, {
-                host: env.host,
-                dialect: "postgres",
-                logging: false,
-                define: {
-                    timestamps: false,
-                },
-            });
-            // Authtentication
-            sequelize
-                .authenticate()
-                .then(function () {
-                console.log("Connect to DB");
-            })
-                .catch(function (err) {
-                throw new Error("Can't connect to DB");
-            });
-            crew_ship_table = sequelize.define(crew_ship_model_1.default.name, crew_ship_model_1.default.model);
-            users_table = sequelize.define(users_model_1.default.name, users_model_1.default.model);
-            crews_table = sequelize.define(crews_model_1.default.name, crews_model_1.default.model);
-            tables = {
-                crew_ship_table: crew_ship_table,
-                users_table: users_table,
-                crews_table: crews_table
-            };
-            // Return
-            return [2 /*return*/, { tables: tables, sequelize: sequelize }];
+            // Return Promise for check error
+            return [2 /*return*/, new Promise(function (resolve, rejects) {
+                    // Env Variable
+                    var env = env_1.env_var();
+                    // Check value If Undefind
+                    if (!env.database || !env.user_db)
+                        return rejects("Some env var are undefind");
+                    // Sequelize
+                    var sequelize = new sequelize_1.Sequelize(env.database, env.user_db, env.password_db, {
+                        host: env.host,
+                        dialect: "postgres",
+                        logging: false,
+                        define: {
+                            timestamps: false,
+                        },
+                    });
+                    // Authtentication
+                    sequelize
+                        .authenticate()
+                        .then(function () {
+                        console.log("Connect to DB");
+                    })
+                        .catch(function (err) {
+                        return rejects("Can't connect to DB");
+                    });
+                    // Define Model
+                    var crew_ship_table = sequelize.define(crew_ship_model_1.default.name, crew_ship_model_1.default.model);
+                    var users_table = sequelize.define(users_model_1.default.name, users_model_1.default.model);
+                    var crews_table = sequelize.define(crews_model_1.default.name, crews_model_1.default.model);
+                    // Define Tables
+                    var tables = {
+                        crew_ship_table: crew_ship_table,
+                        users_table: users_table,
+                        crews_table: crews_table,
+                    };
+                    // Return
+                    resolve({ tables: tables, sequelize: sequelize });
+                })];
         });
     });
 }
