@@ -71,7 +71,7 @@ function create_Channel(oldMember, newMember, db_object) {
                     createChannel_1.default(newMember, crew_ship)
                         .then(function (channel) {
                         // Set User Channel
-                        newMember.setChannel(channel.id);
+                        newMember.setChannel(channel, "Teletrasporto nella ciurma attivato!");
                     })
                         .catch(function (err) {
                         // error on channel creation

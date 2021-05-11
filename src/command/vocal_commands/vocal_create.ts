@@ -36,7 +36,7 @@ export default async function create_Channel(
   createChannel(newMember, crew_ship)
     .then((channel: VoiceChannel) => {
       // Set User Channel
-      newMember.setChannel(channel.id);
+      newMember.setChannel(channel, "Teletrasporto nella ciurma attivato!");
     })
     .catch((err) => {
       // error on channel creation
