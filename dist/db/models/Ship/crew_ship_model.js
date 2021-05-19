@@ -30,6 +30,7 @@ var crew_ship_model = {
     },
     customName: {
         type: sequelize_1.default.STRING,
+        defaultValue: "Lobby"
     },
 };
 // Model

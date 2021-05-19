@@ -5,7 +5,7 @@
 // Import Discord Type
 import { VoiceState } from "discord.js";
 // Import Crew Ship Interface
-import crew_ship from "../db/models/Ship/crew_ship_attributes";
+import crew_ship from "../../db/models/Ship/crew_ship_attributes";
 
 // Exports Functions
 export default async function createChannel(
@@ -21,6 +21,7 @@ export default async function createChannel(
       .create(name, {
         type: "voice",
         parent: crew_ship.parentshipID,
+        userLimit: crew_ship.channelSize
       })
       .then((channel) => {
         // Set Users in new Channel

@@ -11,11 +11,11 @@ import Crew from "../../db/models/Crews/crews_attributes";
 export default async function createVocalChannel(
     mgs: Message,
     crew: Crew,
-    category: CategoryChannel
+    category: CategoryChannel   
   ) {
     // Create Category
     return await mgs.guild?.channels.create(`Canale Vocale ${crew.name}`, {
       type: "voice",
-      parent: category
+      parent: category      
     });
   }

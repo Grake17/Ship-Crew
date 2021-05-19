@@ -14,6 +14,10 @@ import create from "./commands/createShip"; // Command Create Ship
 import addCustom from "./commands/addCustom"; // Command Add Custom Name
 import listCustom from "./commands/listCustom"; // Command List Custom Name
 import cancCustom from "./commands/cancCustom"; // remove custom name command
+import deleteShip from "./commands/deleteShip"; // Import Delete Ship
+import help from "./commands/help"; // Command Help
+import listShip from "./commands/listShip"; // Command List
+import addSpace from "./commands/addspace"; // Command Add Space
 
 // Command List
 const command_list: Record<
@@ -28,6 +32,10 @@ const command_list: Record<
   addname: addCustom,
   listname: listCustom,
   cancname: cancCustom,
+  delete: deleteShip,
+  help: help,
+  list: listShip,
+  addspace: addSpace
 };
 
 // Export Command List

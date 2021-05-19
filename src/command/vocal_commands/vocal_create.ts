@@ -9,7 +9,7 @@ import { Sequelize } from "sequelize";
 // Import Tables Interface
 import tables from "../../db/table_interface";
 // Import Create Channel
-import createChannel from "../../Utils/createChannel";
+import createChannel from "../../Utils/Create Utils/createChannel";
 // Import Get Crew Ship
 import getcrewShip from "../../Utils/Utils Get/getCrewShip";
 // Import Get User Crew
@@ -38,7 +38,7 @@ export default async function create_Channel(
       // Set User Channel
       newMember.setChannel(channel, "Teletrasporto nella ciurma attivato!");
     })
-    .catch((err) => {
+    .catch(err => {
       // error on channel creation
       newMember.setChannel(null, "Fuori dal Cazzo");
     });

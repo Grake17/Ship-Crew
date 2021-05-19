@@ -1,6 +1,6 @@
 "use strict";
 // ========================================
-// Vocal Create
+// Command Add Space
 // ========================================
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -42,44 +42,61 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import Create Channel
-var createChannel_1 = __importDefault(require("../../Utils/Create Utils/createChannel"));
-// Import Get Crew Ship
-var getCrewShip_1 = __importDefault(require("../../Utils/Utils Get/getCrewShip"));
-// Import Get User Crew
-var getUserCrew_1 = __importDefault(require("../../Utils/Utils Get/getUserCrew"));
-// Export Function
-function create_Channel(oldMember, newMember, db_object) {
-    var _a, _b;
+// Import Discord Type
+var discord_js_1 = require("discord.js");
+// Import Config
+var config_json_1 = require("../../../config.json");
+// Import Check Permission
+var checkPermission_1 = __importDefault(require("../../../Utils/checkPermission"));
+// Error MGS
+var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
+// Import Get Ship
+var getCrewShip_1 = __importDefault(require("../../../Utils/Utils Get/getCrewShip"));
+// Export Command
+function addSpace(mgs, db_objct, args) {
+    var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var user_crew, crew_ship;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0: return [4 /*yield*/, getUserCrew_1.default(newMember.id, db_object.tables)];
+        var role, ship, tot;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    // Check Permission
+                    if (!checkPermission_1.default(mgs.author.id))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Non hai i permessi per fare questo comando")];
+                    role = mgs.mentions.roles.first();
+                    // Check Roles & Number
+                    if (!role || !Number(args[2]))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Sintassi Invalida")];
+                    return [4 /*yield*/, getCrewShip_1.default(role.id, db_objct.tables)];
                 case 1:
-                    user_crew = (_a = (_c.sent())) === null || _a === void 0 ? void 0 : _a.get();
-                    // Check Crew
-                    if (!(user_crew === null || user_crew === void 0 ? void 0 : user_crew.ciurmaId))
-                        return [2 /*return*/, newMember.setChannel(null, "Fuori dal Cazzo")];
-                    return [4 /*yield*/, getCrewShip_1.default(user_crew.ciurmaId, db_object.tables)];
-                case 2:
-                    crew_ship = (_b = (_c.sent())) === null || _b === void 0 ? void 0 : _b.get();
-                    // Check Ship
-                    if (!(crew_ship === null || crew_ship === void 0 ? void 0 : crew_ship.shipID))
-                        return [2 /*return*/, newMember.setChannel(null, "Fuori dal Cazzo")];
-                    // Create Channel
-                    createChannel_1.default(newMember, crew_ship)
-                        .then(function (channel) {
-                        // Set User Channel
-                        newMember.setChannel(channel, "Teletrasporto nella ciurma attivato!");
+                    ship = (_a = (_b.sent())) === null || _a === void 0 ? void 0 : _a.get();
+                    // Check Space
+                    if (!(ship === null || ship === void 0 ? void 0 : ship.channelSize))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Error: 500")];
+                    tot = Number(args[2]) + Number(ship.channelSize);
+                    console.log(tot);
+                    // Add Space
+                    if (tot > 20)
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Non puoi superare il limite di **20**.\nSpazio corrente **" + ship.channelSize + "**")];
+                    // Update
+                    db_objct.tables.crew_ship_table
+                        .update({ channelSize: Number(args[2]) + Number(ship.channelSize) }, { where: { shipID: role.id } })
+                        .then(function () {
+                        // Embed
+                        var embed = new discord_js_1.MessageEmbed()
+                            .setAuthor(config_json_1.bot_setting.author)
+                            .setColor(config_json_1.bot_setting.color)
+                            .setDescription("Posti Aggiornati con successo!\n<@&" + role.id + ">: " + ship.channelSize + " --> " + tot);
+                        // Send Message
+                        mgs.channel.send(embed);
                     })
                         .catch(function (err) {
-                        // error on channel creation
-                        newMember.setChannel(null, "Fuori dal Cazzo");
+                        // Error MGS
+                        errorMGS_1.default(mgs, "Error: 500");
                     });
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.default = create_Channel;
+exports.default = addSpace;

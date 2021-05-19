@@ -1,6 +1,6 @@
 "use strict";
 // ========================================
-// Vocal Create
+// Ship List
 // ========================================
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -42,44 +42,62 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import Create Channel
-var createChannel_1 = __importDefault(require("../../Utils/Create Utils/createChannel"));
-// Import Get Crew Ship
-var getCrewShip_1 = __importDefault(require("../../Utils/Utils Get/getCrewShip"));
-// Import Get User Crew
-var getUserCrew_1 = __importDefault(require("../../Utils/Utils Get/getUserCrew"));
-// Export Function
-function create_Channel(oldMember, newMember, db_object) {
-    var _a, _b;
+// import Discord
+var discord_js_1 = require("discord.js");
+// Import Error MGS
+var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
+// Import Config
+var config_json_1 = require("../../../config.json");
+// Import Check Permission
+var checkPermission_1 = __importDefault(require("../../../Utils/checkPermission"));
+// Export Command
+function listShip(mgs, db_objct, args) {
     return __awaiter(this, void 0, void 0, function () {
-        var user_crew, crew_ship;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
-                case 0: return [4 /*yield*/, getUserCrew_1.default(newMember.id, db_object.tables)];
+        var embed, list, array, lists;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    // Check Permission
+                    if (!checkPermission_1.default(mgs.author.id))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Non hai i permessi per questo comando")
+                            // Message Embed
+                        ];
+                    embed = new discord_js_1.MessageEmbed()
+                        .setAuthor(config_json_1.bot_setting.author)
+                        .setColor(config_json_1.bot_setting.color);
+                    return [4 /*yield*/, db_objct.tables.crew_ship_table.findAll()];
                 case 1:
-                    user_crew = (_a = (_c.sent())) === null || _a === void 0 ? void 0 : _a.get();
-                    // Check Crew
-                    if (!(user_crew === null || user_crew === void 0 ? void 0 : user_crew.ciurmaId))
-                        return [2 /*return*/, newMember.setChannel(null, "Fuori dal Cazzo")];
-                    return [4 /*yield*/, getCrewShip_1.default(user_crew.ciurmaId, db_object.tables)];
-                case 2:
-                    crew_ship = (_b = (_c.sent())) === null || _b === void 0 ? void 0 : _b.get();
-                    // Check Ship
-                    if (!(crew_ship === null || crew_ship === void 0 ? void 0 : crew_ship.shipID))
-                        return [2 /*return*/, newMember.setChannel(null, "Fuori dal Cazzo")];
-                    // Create Channel
-                    createChannel_1.default(newMember, crew_ship)
-                        .then(function (channel) {
-                        // Set User Channel
-                        newMember.setChannel(channel, "Teletrasporto nella ciurma attivato!");
-                    })
-                        .catch(function (err) {
-                        // error on channel creation
-                        newMember.setChannel(null, "Fuori dal Cazzo");
-                    });
+                    list = _a.sent();
+                    // Check Lenght
+                    if (list.length == 0) {
+                        // Set Content
+                        embed.setDescription("Nessuna Ship registrata");
+                    }
+                    else {
+                        array = [];
+                        lists = list.map(function (element) {
+                            var _a, _b, _c;
+                            // Get Data
+                            var data = element.get();
+                            // Element Content
+                            var content = [
+                                "\n**NAVE CIURMA**: <@&" + data.shipID + ">",
+                                "\u25FE\uFE0F Canali Vocali #1: <#" + ((_a = data.fixedChannelsID) === null || _a === void 0 ? void 0 : _a.split(",")[0]) + ">",
+                                "\u25FE\uFE0F Canali Vocali #2: <#" + ((_b = data.fixedChannelsID) === null || _b === void 0 ? void 0 : _b.split(",")[1]) + ">",
+                                "\u25FE\uFE0F Canali Vocali #3: <#" + ((_c = data.fixedChannelsID) === null || _c === void 0 ? void 0 : _c.split(",")[2]) + ">",
+                                "\u25FE\uFE0F Spazio Canali: **" + data.channelSize + "**",
+                                "\u25FE\uFE0F Nomi personalizzati: " + data.customName,
+                            ].join("\n");
+                            return content;
+                        });
+                        // Set Descrption
+                        embed.setDescription(lists);
+                    }
+                    // Send Embed
+                    mgs.channel.send(embed);
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.default = create_Channel;
+exports.default = listShip;

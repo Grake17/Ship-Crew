@@ -48,58 +48,65 @@ var discord_js_1 = require("discord.js");
 var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
 // Import GetCrewShip
 var getCrewShip_1 = __importDefault(require("../../../Utils/Utils Get/getCrewShip"));
-// Import GetUserCrew
-var getUserCrew_1 = __importDefault(require("../../../Utils/Utils Get/getUserCrew"));
 // Import Config
 var config_json_1 = require("../../../config.json");
+var getID_1 = __importDefault(require("../../../Utils/getID"));
 // Export Command
 function cancCustom(mgs, db_objct, args) {
-    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var user, ship, ship_names, index;
-        return __generator(this, function (_d) {
-            switch (_d.label) {
-                case 0: return [4 /*yield*/, getUserCrew_1.default(mgs.author.id, db_objct.tables)];
-                case 1:
-                    user = (_a = (_d.sent())) === null || _a === void 0 ? void 0 : _a.get();
-                    // Check Name
-                    if (!(user === null || user === void 0 ? void 0 : user.ciurmaId) || !args[2])
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
-                    return [4 /*yield*/, getCrewShip_1.default(user === null || user === void 0 ? void 0 : user.ciurmaId, db_objct.tables)];
-                case 2:
-                    ship = (_b = (_d.sent())) === null || _b === void 0 ? void 0 : _b.get();
-                    ship_names = (_c = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _c === void 0 ? void 0 : _c.split(",");
-                    // Check Ship Names
-                    if (!ship_names)
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Non hai nessun nome personalizzato")];
-                    // Check Undefinds
-                    if (!ship_names.includes(args[2]))
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Nome non trovato!")];
-                    index = ship_names.indexOf(args[2]);
-                    // Check Index
-                    if (index > -1)
-                        ship_names.splice(index, 1);
-                    // Check Length
-                    if (ship_names.length == 0)
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Non puoi eliminare l'ultimo nome")];
-                    // Update DB
-                    db_objct.tables.crew_ship_table
-                        .update({ customName: String(ship_names) }, { where: { shipID: user.ciurmaId } })
-                        .then(function () {
-                        // Embed
-                        var embed = new discord_js_1.MessageEmbed()
-                            .setAuthor(config_json_1.bot_setting.author)
-                            .setColor(config_json_1.bot_setting.color)
-                            .setDescription("Il nome " + args[2] + " \u00E8 stato rimosso correttamente");
-                        // Send MGS
-                        mgs.channel.send(embed);
-                    })
-                        .catch(function (err) {
-                        // Error MGS
-                        errorMGS_1.default(mgs, "Error: 500");
-                    });
-                    return [2 /*return*/];
-            }
+        var _this = this;
+        return __generator(this, function (_a) {
+            // Check Name
+            if (!args[2])
+                return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
+            getID_1.default(mgs, db_objct.tables, args)
+                .then(function (id) { return __awaiter(_this, void 0, void 0, function () {
+                var ship, ship_names, index;
+                var _a, _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
+                        case 0: return [4 /*yield*/, getCrewShip_1.default(id, db_objct.tables)];
+                        case 1:
+                            ship = (_a = (_c.sent())) === null || _a === void 0 ? void 0 : _a.get();
+                            ship_names = (_b = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _b === void 0 ? void 0 : _b.split(",");
+                            // Check Ship Names
+                            if (!ship_names)
+                                return [2 /*return*/, errorMGS_1.default(mgs, "Non hai nessun nome personalizzato")];
+                            // Check Undefinds
+                            if (!ship_names.includes(args[2]))
+                                return [2 /*return*/, errorMGS_1.default(mgs, "Nome non trovato!")];
+                            index = ship_names.indexOf(args[2]);
+                            // Check Index
+                            if (index > -1)
+                                ship_names.splice(index, 1);
+                            // Check Length
+                            if (ship_names.length == 0)
+                                return [2 /*return*/, errorMGS_1.default(mgs, "Non puoi eliminare l'ultimo nome")];
+                            // Update DB
+                            db_objct.tables.crew_ship_table
+                                .update({ customName: String(ship_names) }, { where: { shipID: id } })
+                                .then(function () {
+                                // Embed
+                                var embed = new discord_js_1.MessageEmbed()
+                                    .setAuthor(config_json_1.bot_setting.author)
+                                    .setColor(config_json_1.bot_setting.color)
+                                    .setDescription("Il nome " + args[2] + " \u00E8 stato rimosso correttamente");
+                                // Send MGS
+                                mgs.channel.send(embed);
+                            })
+                                .catch(function (err) {
+                                // Error MGS
+                                errorMGS_1.default(mgs, "Error: 500");
+                            });
+                            return [2 /*return*/];
+                    }
+                });
+            }); })
+                .catch(function (err) {
+                // Error MGS
+                errorMGS_1.default(mgs, err);
+            });
+            return [2 /*return*/];
         });
     });
 }

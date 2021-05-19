@@ -27,6 +27,7 @@ const crew_ship_model = {
   },
   customName: {
     type: Sequelize.STRING,
+    defaultValue: "Lobby"
   },
 };
 

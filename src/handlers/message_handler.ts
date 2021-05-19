@@ -12,6 +12,8 @@ import command_list from "../command/message_commands/command_list";
 import tables from "../db/table_interface";
 // Import Env Var
 import { env_var } from "../env";
+// Import LOG
+import log from "../Utils/log"
 
 // Export handlers
 export default async function message_hanlder(
@@ -25,8 +27,9 @@ export default async function message_hanlder(
   // Split Message
   const args = mgs.content.split(" ");
   // Check Prefix
-  if (args[0] !== env.prefix) return;
+  if (args[0] !== env.prefix + "s") return;
   // Exec Command
   command_list[args[1]]?.(mgs, db_objct, args);
-  console.log(args);
+  // Log Function
+  log(mgs);
 }

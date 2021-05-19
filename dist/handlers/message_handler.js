@@ -46,6 +46,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var command_list_1 = __importDefault(require("../command/message_commands/command_list"));
 // Import Env Var
 var env_1 = require("../env");
+// Import LOG
+var log_1 = __importDefault(require("../Utils/log"));
 // Export handlers
 function message_hanlder(mgs, db_objct) {
     var _a;
@@ -58,11 +60,12 @@ function message_hanlder(mgs, db_objct) {
                 return [2 /*return*/];
             args = mgs.content.split(" ");
             // Check Prefix
-            if (args[0] !== env.prefix)
+            if (args[0] !== env.prefix + "s")
                 return [2 /*return*/];
             // Exec Command
             (_a = command_list_1.default[args[1]]) === null || _a === void 0 ? void 0 : _a.call(command_list_1.default, mgs, db_objct, args);
-            console.log(args);
+            // Log Function
+            log_1.default(mgs);
             return [2 /*return*/];
         });
     });

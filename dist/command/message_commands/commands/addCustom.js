@@ -48,65 +48,65 @@ var discord_js_1 = require("discord.js");
 var getCrew_1 = __importDefault(require("../../../Utils/Utils Get/getCrew"));
 // import Error MGS
 var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
-// Import Get Crew
-var getUserCrew_1 = __importDefault(require("../../../Utils/Utils Get/getUserCrew"));
 // import Get Ship
 var getCrewShip_1 = __importDefault(require("../../../Utils/Utils Get/getCrewShip"));
 // Import Config
 var config_json_1 = require("../../../config.json");
+var getID_1 = __importDefault(require("../../../Utils/getID"));
 // Export Command
 function addCustom(mgs, db_objct, args) {
-    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function () {
-        var user, ship, names, crew;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    // Check Name
-                    if (!args[2])
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
-                    return [4 /*yield*/, getUserCrew_1.default(mgs.author.id, db_objct.tables)];
-                case 1:
-                    user = (_a = (_e.sent())) === null || _a === void 0 ? void 0 : _a.get();
-                    // Check Crews
-                    if (!(user === null || user === void 0 ? void 0 : user.ciurmaId))
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Non sei in nessuna ciurma")];
-                    return [4 /*yield*/, getCrewShip_1.default(user.ciurmaId, db_objct.tables)];
-                case 2:
-                    ship = (_b = (_e.sent())) === null || _b === void 0 ? void 0 : _b.get();
-                    names = (_c = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _c === void 0 ? void 0 : _c.split(",");
-                    // Check Mane Exist
-                    if (names === null || names === void 0 ? void 0 : names.includes(args[2]))
-                        return [2 /*return*/, errorMGS_1.default(mgs, "Il nome " + args[2] + " \u00E8 gi\u00E0 presente nella lista")];
-                    return [4 /*yield*/, getCrew_1.default(user.ciurmaId, db_objct.tables)];
-                case 3:
-                    crew = (_d = (_e.sent())) === null || _d === void 0 ? void 0 : _d.get();
-                    // Count Name
-                    if (names)
-                        if (!(crew === null || crew === void 0 ? void 0 : crew.livellociurma) || names.length >= crew.livellociurma * 3)
-                            return [2 /*return*/, errorMGS_1.default(mgs, "La ciurma ha gi\u00E0 raggiunto il suo limite di nomi personalizzati!")];
-                    console.log(names);
-                    // Add New Name
-                    names === null || names === void 0 ? void 0 : names.push(args[2]);
-                    // Edit DB && error handler
-                    db_objct.tables.crew_ship_table
-                        .update({ customName: String(names) }, { where: { shipID: ship === null || ship === void 0 ? void 0 : ship.shipID } })
-                        .then(function () {
-                        // Embed
-                        var emebd = new discord_js_1.MessageEmbed()
-                            .setAuthor(config_json_1.bot_setting.author)
-                            .setColor(config_json_1.bot_setting.color)
-                            .setTitle("Nome inserito!")
-                            .setDescription("Il nome **" + args[2] + "** \u00E8 ora disponibile!");
-                        // Send MGS
-                        mgs.channel.send(emebd);
-                    })
-                        .catch(function (err) {
-                        // Error MGS
-                        errorMGS_1.default(mgs, "Error 500");
-                    });
-                    return [2 /*return*/];
-            }
+        var _this = this;
+        return __generator(this, function (_a) {
+            // Check Name
+            if (!args[2])
+                return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
+            getID_1.default(mgs, db_objct.tables, args).then(function (id) { return __awaiter(_this, void 0, void 0, function () {
+                var ship, names, crew;
+                var _a, _b, _c;
+                return __generator(this, function (_d) {
+                    switch (_d.label) {
+                        case 0: return [4 /*yield*/, getCrewShip_1.default(id, db_objct.tables)];
+                        case 1:
+                            ship = (_a = (_d.sent())) === null || _a === void 0 ? void 0 : _a.get();
+                            names = (_b = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _b === void 0 ? void 0 : _b.split(",");
+                            // Check Mane Exist
+                            if (names === null || names === void 0 ? void 0 : names.includes(args[2]))
+                                return [2 /*return*/, errorMGS_1.default(mgs, "Il nome " + args[2] + " \u00E8 gi\u00E0 presente nella lista")];
+                            return [4 /*yield*/, getCrew_1.default(id, db_objct.tables)];
+                        case 2:
+                            crew = (_c = (_d.sent())) === null || _c === void 0 ? void 0 : _c.get();
+                            // Count Name
+                            if (names)
+                                if (!(crew === null || crew === void 0 ? void 0 : crew.livellociurma) || names.length >= crew.livellociurma * 3)
+                                    return [2 /*return*/, errorMGS_1.default(mgs, "La ciurma ha gi\u00E0 raggiunto il suo limite di nomi personalizzati!")];
+                            // Add New Name
+                            names === null || names === void 0 ? void 0 : names.push(args[2]);
+                            // Edit DB && error handler
+                            db_objct.tables.crew_ship_table
+                                .update({ customName: String(names) }, { where: { shipID: ship === null || ship === void 0 ? void 0 : ship.shipID } })
+                                .then(function () {
+                                // Embed
+                                var embed = new discord_js_1.MessageEmbed()
+                                    .setAuthor(config_json_1.bot_setting.author)
+                                    .setColor(config_json_1.bot_setting.color)
+                                    .setTitle("Nome inserito!")
+                                    .setDescription("Il nome **" + args[2] + "** \u00E8 ora disponibile!");
+                                // Send MGS
+                                mgs.channel.send(embed);
+                            })
+                                .catch(function (err) {
+                                // Error MGS
+                                errorMGS_1.default(mgs, "Error 500");
+                            });
+                            return [2 /*return*/];
+                    }
+                });
+            }); }).catch(function (err) {
+                // Error MGS
+                errorMGS_1.default(mgs, err);
+            });
+            return [2 /*return*/];
         });
     });
 }
