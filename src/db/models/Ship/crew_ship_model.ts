@@ -16,13 +16,17 @@ const crew_ship_model = {
     type: Sequelize.STRING,
     unique: true,
   },
-  voiceChannelID: {
+  fixedChannelsID: {
     type: Sequelize.STRING,
     unique: true,
+    defaultValue: undefined,
   },
-  textChannelID: {
+  channelSize: {
+    type: Sequelize.NUMBER,
+    defaultValue: 12,
+  },
+  customName: {
     type: Sequelize.STRING,
-    unique: true,
   },
 };
 

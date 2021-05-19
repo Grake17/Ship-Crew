@@ -18,14 +18,15 @@ export default async function message_hanlder(
   mgs: Message,
   db_objct: { tables: tables; sequelize: Sequelize }
 ) {
-    // Env Varibles
-    const env = env_var()
-    // Check Channel
-    if(!mgs.channel.id) return;  
-    // Split Message 
-    const args = mgs.content.split(" ");  
-    // Check Prefix
-    if(args[0] !== env.prefix) return;
-    // Exec Command
-    command_list[args[1]]?.(mgs, db_objct, args);   
+  // Env Varibles
+  const env = env_var();
+  // Check Channel
+  if (!mgs.channel.id) return;
+  // Split Message
+  const args = mgs.content.split(" ");
+  // Check Prefix
+  if (args[0] !== env.prefix) return;
+  // Exec Command
+  command_list[args[1]]?.(mgs, db_objct, args);
+  console.log(args);
 }

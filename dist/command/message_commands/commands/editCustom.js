@@ -1,6 +1,6 @@
 "use strict";
 // ========================================
-// Message Handler Script
+// Edit Custom
 // ========================================
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -42,29 +42,49 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import Command Ship
-var command_list_1 = __importDefault(require("../command/message_commands/command_list"));
-// Import Env Var
-var env_1 = require("../env");
-// Export handlers
-function message_hanlder(mgs, db_objct) {
-    var _a;
+// import Discord
+var discord_js_1 = require("discord.js");
+// Import Error MGS
+var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
+// Import GetCrewShip
+var getCrewShip_1 = __importDefault(require("../../../Utils/Utils Get/getCrewShip"));
+// Import GetUserCrew
+var getUserCrew_1 = __importDefault(require("../../../Utils/Utils Get/getUserCrew"));
+// Import Config
+var config_json_1 = require("../../../config.json");
+// Export Command
+function editCustom(mgs, db_objct, args) {
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var env, args;
-        return __generator(this, function (_b) {
-            env = env_1.env_var();
-            // Check Channel
-            if (!mgs.channel.id)
-                return [2 /*return*/];
-            args = mgs.content.split(" ");
-            // Check Prefix
-            if (args[0] !== env.prefix)
-                return [2 /*return*/];
-            // Exec Command
-            (_a = command_list_1.default[args[1]]) === null || _a === void 0 ? void 0 : _a.call(command_list_1.default, mgs, db_objct, args);
-            console.log(args);
-            return [2 /*return*/];
+        var role, user, ship, content, embed;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0:
+                    role = mgs.mentions.roles.first();
+                    return [4 /*yield*/, getUserCrew_1.default(mgs.author.id, db_objct.tables)];
+                case 1:
+                    user = (_a = (_d.sent())) === null || _a === void 0 ? void 0 : _a.get();
+                    // Check Name
+                    if (!role || !(user === null || user === void 0 ? void 0 : user.ciurmaId))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
+                    return [4 /*yield*/, getCrewShip_1.default(role.id, db_objct.tables)];
+                case 2:
+                    ship = (_b = (_d.sent())) === null || _b === void 0 ? void 0 : _b.get();
+                    content = [
+                        "Ecco la lista dei nomi personalizzati della ciurma <&" + (ship === null || ship === void 0 ? void 0 : ship.shipID) + ">",
+                    ].join("\n");
+                    embed = new discord_js_1.MessageEmbed()
+                        .setAuthor(config_json_1.bot_setting.author)
+                        .setColor(config_json_1.bot_setting.color);
+                    //
+                    (_c = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _c === void 0 ? void 0 : _c.split(",").map(function (name) { return embed.addField("----------------------", "-----> " + name); });
+                    // Set Content
+                    embed.setDescription("Ecco la lista dei nomi personalizzati della ciurma <&" + (ship === null || ship === void 0 ? void 0 : ship.shipID) + ">");
+                    // Send Message
+                    mgs.channel.send(embed);
+                    return [2 /*return*/];
+            }
         });
     });
 }
-exports.default = message_hanlder;
+exports.default = editCustom;

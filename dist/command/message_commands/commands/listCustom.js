@@ -1,6 +1,6 @@
 "use strict";
 // ========================================
-// Vocal Delete
+// Edit Custom
 // ========================================
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -42,34 +42,58 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import Get Ship By Parent
-var getparentShip_1 = __importDefault(require("../../Utils/Utils Get/getparentShip"));
-// Export Function Delete
-function vocal_delete(oldMember, newMember, db_object) {
-    var _a, _b, _c, _d;
+// import Discord
+var discord_js_1 = require("discord.js");
+// Import Error MGS
+var errorMGS_1 = __importDefault(require("../../../Utils/errorMGS"));
+// Import GetCrewShip
+var getCrewShip_1 = __importDefault(require("../../../Utils/Utils Get/getCrewShip"));
+// Import GetUserCrew
+var getUserCrew_1 = __importDefault(require("../../../Utils/Utils Get/getUserCrew"));
+// Import Config
+var config_json_1 = require("../../../config.json");
+// Export Command
+function listCustom(mgs, db_objct, args) {
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var ship;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
-                case 0:
-                    // Check Parent
-                    if (!((_a = oldMember.channel) === null || _a === void 0 ? void 0 : _a.parentID))
-                        return [2 /*return*/];
-                    return [4 /*yield*/, getparentShip_1.default((_b = oldMember.channel) === null || _b === void 0 ? void 0 : _b.parentID, db_object.tables)];
+        var user, ship, ship_names, content, x, embed;
+        return __generator(this, function (_d) {
+            switch (_d.label) {
+                case 0: return [4 /*yield*/, getUserCrew_1.default(mgs.author.id, db_objct.tables)];
                 case 1:
-                    ship = (_c = (_e.sent())) === null || _c === void 0 ? void 0 : _c.get();
-                    // Check OldMemberID
-                    if (oldMember.channelID == null)
-                        return [2 /*return*/];
-                    // Check InDeleteble Channel && Parent
-                    if (((_d = ship === null || ship === void 0 ? void 0 : ship.fixedChannelsID) === null || _d === void 0 ? void 0 : _d.split(",").includes(oldMember.channelID)) || (oldMember.channel.parentID !== (ship === null || ship === void 0 ? void 0 : ship.parentshipID)))
-                        return [2 /*return*/];
-                    // Check Lenght
-                    if (oldMember.channel.members.size === 0)
-                        oldMember.channel.delete();
+                    user = (_a = (_d.sent())) === null || _a === void 0 ? void 0 : _a.get();
+                    // Check Name
+                    if (!(user === null || user === void 0 ? void 0 : user.ciurmaId))
+                        return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
+                    return [4 /*yield*/, getCrewShip_1.default(user === null || user === void 0 ? void 0 : user.ciurmaId, db_objct.tables)];
+                case 2:
+                    ship = (_b = (_d.sent())) === null || _b === void 0 ? void 0 : _b.get();
+                    ship_names = (_c = ship === null || ship === void 0 ? void 0 : ship.customName) === null || _c === void 0 ? void 0 : _c.split(",");
+                    content = [];
+                    // Check length Names
+                    if (!ship_names || ship_names.length == 0) {
+                        // Set MGS content if Names Are 0
+                        content.push("La lista dei nomi personalizzati della ciurma <@&" + (ship === null || ship === void 0 ? void 0 : ship.shipID) + "> \u00E8 vuota.");
+                    }
+                    else {
+                        // Set MGS content if Names Are > 0
+                        content.push("Ecco la lista dei nomi personalizzati della ciurma <@&" + (ship === null || ship === void 0 ? void 0 : ship.shipID) + ">\n");
+                        // For Loop
+                        for (x = 0; x < ship_names.length; x++) {
+                            // Add Value to array
+                            content.push("Nome [**" + x + "**]: " + ship_names[x]);
+                        }
+                    }
+                    console.log(content);
+                    embed = new discord_js_1.MessageEmbed()
+                        .setAuthor(config_json_1.bot_setting.author)
+                        .setColor(config_json_1.bot_setting.color)
+                        .setDescription(content);
+                    // Send Message
+                    mgs.channel.send(embed);
                     return [2 /*return*/];
             }
         });
     });
 }
-exports.default = vocal_delete;
+exports.default = listCustom;

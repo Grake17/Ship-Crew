@@ -45,14 +45,19 @@ function createChannel(newMember, crew_ship) {
         return __generator(this, function (_a) {
             // Return Promise
             return [2 /*return*/, new Promise(function (resolve, rejects) {
+                    // Get Name
+                    var name = getName(newMember, crew_ship);
                     // Create Channel
-                    newMember.guild.channels.create("Test 1", {
+                    newMember.guild.channels
+                        .create(name, {
                         type: "voice",
-                        parent: crew_ship.parentshipID
-                    }).then(function (channel) {
+                        parent: crew_ship.parentshipID,
+                    })
+                        .then(function (channel) {
                         // Set Users in new Channel
                         resolve(channel);
-                    }).catch(function (err) {
+                    })
+                        .catch(function (err) {
                         // Reject Promise
                         rejects(err);
                     });
@@ -61,3 +66,13 @@ function createChannel(newMember, crew_ship) {
     });
 }
 exports.default = createChannel;
+// Function For Get Name
+function getName(newMember, crew_ship) {
+    // Check Names
+    if (!crew_ship.customName)
+        return "Temp Lobby";
+    // Randoms Name
+    var names = crew_ship.customName.split(",");
+    // Return Names
+    return names[Math.floor(Math.random() * names.length)];
+}

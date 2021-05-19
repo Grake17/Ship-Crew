@@ -7,7 +7,7 @@ import { env_var } from "../env";
 // Import Sequelize
 import { Sequelize } from "sequelize";
 // Import Crew_Ship Model
-import crew_ship from "./models/CrewShip/crew_ship_model";
+import crew_ship from "./models/Ship/crew_ship_model";
 // import Table Interface
 import Table from "./table_interface";
 // Import Users Model

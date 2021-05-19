@@ -8,8 +8,12 @@ import { Message } from "discord.js";
 import { Sequelize } from "sequelize";
 // Import Table Interface
 import tables from "../../db/table_interface";
+
 // Import Commands
-import create from "./Ship Commands/createShip"; // Command Create Ship
+import create from "./commands/createShip"; // Command Create Ship
+import addCustom from "./commands/addCustom"; // Command Add Custom Name
+import listCustom from "./commands/listCustom"; // Command List Custom Name
+import cancCustom from "./commands/cancCustom"; // remove custom name command
 
 // Command List
 const command_list: Record<
@@ -20,7 +24,10 @@ const command_list: Record<
     args: string[]
   ) => Promise<void> | undefined
 > = {
-    create: create
+  create: create,
+  addname: addCustom,
+  listname: listCustom,
+  cancname: cancCustom,
 };
 
 // Export Command List

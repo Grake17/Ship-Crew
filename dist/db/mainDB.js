@@ -47,7 +47,7 @@ var env_1 = require("../env");
 // Import Sequelize
 var sequelize_1 = require("sequelize");
 // Import Crew_Ship Model
-var crew_ship_model_1 = __importDefault(require("./models/CrewShip/crew_ship_model"));
+var crew_ship_model_1 = __importDefault(require("./models/Ship/crew_ship_model"));
 // Import Users Model
 var users_model_1 = __importDefault(require("./models/Users/users_model"));
 // Import Crews Model

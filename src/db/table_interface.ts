@@ -5,7 +5,7 @@
 // Import Sequelize
 import { Model, ModelCtor } from "sequelize";
 // Import Crew_Ship Attributes
-import crew_ship from "./models/CrewShip/crew_ship_attributes";
+import crew_ship from "./models/Ship/crew_ship_attributes";
 // import Users Attribute
 import user_attributes from "./models/Users/user_attributes";
 // Import Crews Attributes

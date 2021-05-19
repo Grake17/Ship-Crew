@@ -1,6 +1,6 @@
 "use strict";
 // ========================================
-// Message Handler Script
+// Create Category
 // ========================================
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -38,33 +38,21 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-// Import Command Ship
-var command_list_1 = __importDefault(require("../command/message_commands/command_list"));
-// Import Env Var
-var env_1 = require("../env");
-// Export handlers
-function message_hanlder(mgs, db_objct) {
+// Create Crew Category
+function createCategory(mgs, crew) {
     var _a;
     return __awaiter(this, void 0, void 0, function () {
-        var env, args;
         return __generator(this, function (_b) {
-            env = env_1.env_var();
-            // Check Channel
-            if (!mgs.channel.id)
-                return [2 /*return*/];
-            args = mgs.content.split(" ");
-            // Check Prefix
-            if (args[0] !== env.prefix)
-                return [2 /*return*/];
-            // Exec Command
-            (_a = command_list_1.default[args[1]]) === null || _a === void 0 ? void 0 : _a.call(command_list_1.default, mgs, db_objct, args);
-            console.log(args);
-            return [2 /*return*/];
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, ((_a = mgs.guild) === null || _a === void 0 ? void 0 : _a.channels.create(crew.name, {
+                        type: "category",
+                    }))];
+                case 1: 
+                // Create Category
+                return [2 /*return*/, _b.sent()];
+            }
         });
     });
 }
-exports.default = message_hanlder;
+exports.default = createCategory;

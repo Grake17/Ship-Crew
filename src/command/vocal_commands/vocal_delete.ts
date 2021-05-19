@@ -23,8 +23,10 @@ export default async function vocal_delete(
   const ship = (
     await getparentShip(oldMember.channel?.parentID, db_object.tables)
   )?.get();
+  // Check OldMemberID
+  if(oldMember.channelID == null) return;
   // Check InDeleteble Channel && Parent
-  if ((!(oldMember.channelID !== ship?.voiceChannelID)) || (oldMember.channel.parentID !== ship?.parentshipID)) return;
+  if ((ship?.fixedChannelsID?.split(",").includes(oldMember.channelID)) || (oldMember.channel.parentID !== ship?.parentshipID)) return;
   // Check Lenght
   if (oldMember.channel.members.size === 0) oldMember.channel.delete();
 }

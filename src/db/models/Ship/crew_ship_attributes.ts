@@ -5,7 +5,8 @@
 // Export Interface
 export default interface crew_ship {
   shipID: string;
-  voiceChannelID: string;
+  fixedChannelsID?: string;
   parentshipID: string;
-  textChannelID: string;
+  channelSize?: number;
+  customName?: string;
 }
