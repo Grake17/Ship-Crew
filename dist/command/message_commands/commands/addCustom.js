@@ -62,7 +62,7 @@ function addCustom(mgs, db_objct, args) {
             if (!args[2])
                 return [2 /*return*/, errorMGS_1.default(mgs, "Errore nella sintassi")];
             getID_1.default(mgs, db_objct.tables, args).then(function (id) { return __awaiter(_this, void 0, void 0, function () {
-                var ship, names, crew;
+                var ship, names, crew, name;
                 var _a, _b, _c;
                 return __generator(this, function (_d) {
                     switch (_d.label) {
@@ -80,6 +80,12 @@ function addCustom(mgs, db_objct, args) {
                             if (names)
                                 if (!(crew === null || crew === void 0 ? void 0 : crew.livellociurma) || names.length >= crew.livellociurma * 3)
                                     return [2 /*return*/, errorMGS_1.default(mgs, "La ciurma ha gi\u00E0 raggiunto il suo limite di nomi personalizzati!")];
+                            name = mgs.content.replace(">s addname", "");
+                            console.log(name);
+                            if (mgs.mentions.roles) {
+                                name.substring(14, mgs.content.length - 23);
+                            }
+                            console.log(name);
                             // Add New Name
                             names === null || names === void 0 ? void 0 : names.push(args[2]);
                             // Edit DB && error handler

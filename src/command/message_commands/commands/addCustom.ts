@@ -42,7 +42,14 @@ export default async function addCustom(
         return errorMGS(
           mgs,
           `La ciurma ha già raggiunto il suo limite di nomi personalizzati!`
-        );
+        );    
+    // Name
+    const name = mgs.content.replace(">s addname","");
+    console.log(name)
+    if(mgs.mentions.roles) {
+      name.substring(14, mgs.content.length - 23);
+    }
+    console.log(name)
     // Add New Name
     names?.push(args[2]);
     // Edit DB && error handler
