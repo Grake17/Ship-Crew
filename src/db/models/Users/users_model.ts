@@ -3,82 +3,82 @@
 // ===================================================
 
 // Import Sequelize
-import Sequelize from "sequelize";
+import { STRING, BOOLEAN, NUMBER, DATE } from "sequelize";
 
 // Models
 const users = {
   userId: {
-    type: Sequelize.STRING,
+    type: STRING,
     unique: true,
     primaryKey: true,
   },
   gamerTag: {
-    type: Sequelize.STRING,
+    type: STRING,
     defaultValue: null,
     unique: true,
   },
   guest: {
-    type: Sequelize.BOOLEAN,
+    type: BOOLEAN,
     defaultValue: false,
   },
   ciurmaId: {
-    type: Sequelize.STRING,
+    type: STRING,
     defaultValue: null,
   },
   saldo: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   saldoDepositatoTot: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   saldoDepositatoPar: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   guadagnoMensile: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   pirataLeggendario: {
-    type: Sequelize.BOOLEAN,
+    type: BOOLEAN,
     defaultValue: false,
   },
   guardianoAthena: {
-    type: Sequelize.BOOLEAN,
+    type: BOOLEAN,
     defaultValue: false,
   },
   dataEntrataCiurma: {
-    type: Sequelize.DATE,
+    type: DATE,
     defaultValue: null,
   },
   dataEntrataVoc: {
-    type: Sequelize.STRING,
+    type: STRING,
     defaultValue: null,
   },
   bannato: {
-    type: Sequelize.BOOLEAN,
+    type: BOOLEAN,
     defaultValue: false,
   },
   discordlevel: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   gamelevel: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   chiavi: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
   dateGuest: {
-    type: Sequelize.DATE,
+    type: DATE,
     defaultValue: null,
   },
   guestTime: {
-    type: Sequelize.INTEGER,
+    type: NUMBER,
     defaultValue: 0,
   },
 };

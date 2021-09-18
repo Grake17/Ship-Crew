@@ -3,36 +3,36 @@
 // ========================================
 
 // Import Sequelize
-import Sequelize from "sequelize";
+import { STRING, NUMBER } from "sequelize";
 
 // Define Variables
 const crew_ship_model = {
   shipID: {
-    type: Sequelize.STRING,
+    type: STRING,
     unique: true,
     primaryKey: true,
   },
   parentshipID: {
-    type: Sequelize.STRING,
+    type: STRING,
     unique: true,
   },
   fixedChannelsID: {
-    type: Sequelize.STRING,
+    type: STRING,
     unique: true,
     defaultValue: undefined,
   },
   channelSize: {
-    type: Sequelize.NUMBER,
+    type: NUMBER,
     defaultValue: 12,
   },
   customName: {
-    type: Sequelize.STRING,
+    type: STRING,
     defaultValue: "Lobby"
   },
 };
 
 // Model
-const crew_ship = { name: "crews_ship", model: crew_ship_model };
+const crew_ship = { name: "ships", model: crew_ship_model };
 
 // Export
 export default crew_ship;
