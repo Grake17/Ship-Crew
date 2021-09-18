@@ -10,7 +10,7 @@ const env_data = [
   "TOKEN",
   "PREFIX",
   "DATABASE",
-  "USERNAME",
+  "USER_DB",
   "PASSWORD",
   "HOST",
   "Create_ChannelID",
