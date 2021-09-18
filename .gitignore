@@ -1,6 +1,7 @@
-# dependencies
+# Folders
 node_modules/
 dist/
 
-#.Env
+# Files
 *.env
+package-lock.json
