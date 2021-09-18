@@ -131,9 +131,8 @@ export default async function createCategory(mgs: Message, crew: Crew) {
       },
       {
         id: roles.pirata_veterano,
-        allow: ["CREATE_INSTANT_INVITE", "SPEAK", "STREAM", "VIEW_CHANNEL","USE_VAD",],
-        deny: [          
-          "READ_MESSAGE_HISTORY",
+        allow: ["CREATE_INSTANT_INVITE", "SPEAK", "STREAM", "VIEW_CHANNEL","USE_VAD","READ_MESSAGE_HISTORY",],
+        deny: [
           "SEND_MESSAGES",
           "EMBED_LINKS",
           "ATTACH_FILES",
@@ -154,9 +153,8 @@ export default async function createCategory(mgs: Message, crew: Crew) {
       },
       {
         id: roles.tortuga,
-        allow: ["CREATE_INSTANT_INVITE", "SPEAK", "STREAM", "VIEW_CHANNEL","USE_VAD",],
+        allow: ["CREATE_INSTANT_INVITE", "SPEAK", "STREAM", "VIEW_CHANNEL","USE_VAD","READ_MESSAGE_HISTORY"],
         deny: [          
-          "READ_MESSAGE_HISTORY",
           "SEND_MESSAGES",
           "EMBED_LINKS",
           "ATTACH_FILES",
