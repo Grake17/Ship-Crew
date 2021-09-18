@@ -12,8 +12,6 @@ import tables from "../../../db/table_interface";
 import errorMGS from "../../../Utils/errorMGS";
 // Import GetCrewShip
 import getcrewShip from "../../../Utils/Utils Get/getCrewShip";
-// Import GetUserCrew
-import getUserCrew from "../../../Utils/Utils Get/getUserCrew";
 // Import Config
 import { bot_setting } from "../../../config.json";
 import getID from "../../../Utils/getID";
@@ -25,9 +23,16 @@ export default async function cancCustom(
   args: string[]
 ) {
   // Check Name
-  if (!args[2]) return errorMGS(mgs, "Errore nella sintassi");
   getID(mgs, db_objct.tables, args)
     .then(async (id) => {
+      // Name
+      let name = mgs.content;
+      // Extract Name
+      if (mgs.mentions.roles.first()?.id) {
+        name = name.substring(12, mgs.content.length - 23);
+      } else {
+        name = name.substring(12);
+      }
       // Get Ship
       const ship = (await getcrewShip(id, db_objct.tables))?.get();
       // Ship Names
@@ -36,10 +41,10 @@ export default async function cancCustom(
       if (!ship_names)
         return errorMGS(mgs, "Non hai nessun nome personalizzato");
       // Check Undefinds
-      if (!ship_names.includes(args[2]))
+      if (!ship_names.includes(name))
         return errorMGS(mgs, "Nome non trovato!");
       // Remove
-      const index = ship_names.indexOf(args[2]);
+      const index = ship_names.indexOf(name);
       // Check Index
       if (index > -1) ship_names.splice(index, 1);
       // Check Length
@@ -56,7 +61,7 @@ export default async function cancCustom(
           const embed = new MessageEmbed()
             .setAuthor(bot_setting.author)
             .setColor(bot_setting.color)
-            .setDescription(`Il nome ${args[2]} è stato rimosso correttamente`);
+            .setDescription(`Il nome **${name}** è stato rimosso correttamente`);
           // Send MGS
           mgs.channel.send(embed);
         })

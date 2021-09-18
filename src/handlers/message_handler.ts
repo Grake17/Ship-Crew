@@ -13,7 +13,9 @@ import tables from "../db/table_interface";
 // Import Env Var
 import { env_var } from "../env";
 // Import LOG
-import log from "../Utils/log"
+import log from "../Utils/log";
+// Import Config
+import { command_channel } from "../config.json";
 
 // Export handlers
 export default async function message_hanlder(
@@ -21,9 +23,9 @@ export default async function message_hanlder(
   db_objct: { tables: tables; sequelize: Sequelize }
 ) {
   // Env Varibles
-  const env = env_var();
+  const env = env_var();[">s", "comand"]
   // Check Channel
-  if (!mgs.channel.id) return;
+  if (!command_channel.includes(mgs.channel.id)) return;
   // Split Message
   const args = mgs.content.split(" ");
   // Check Prefix

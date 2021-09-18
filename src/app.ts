@@ -34,10 +34,14 @@ try {
       bot.on("ready", () => console.log(`${bot.user?.username} pronto!`));
 
       // Bot Message Listener
-      bot.on("message", mgs => { message_handler(mgs, db_object); });
-      
+      bot.on("message", (mgs) => {
+        message_handler(mgs, db_object);
+      });
+
       // Bot Voice Listener
-      bot.on("voiceStateUpdate", (oldMember, newMember) => { vocal_handler(oldMember, newMember, db_object)} );
+      bot.on("voiceStateUpdate", (oldMember, newMember) => {
+        vocal_handler(oldMember, newMember, db_object);
+      });
 
       // Bot Login
       bot.login(env.token);

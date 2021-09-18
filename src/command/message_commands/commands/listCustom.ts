@@ -36,7 +36,7 @@ export default async function listCustom(
       if (!ship_names || ship_names.length == 0) {
         // Set MGS content if Names Are 0
         content.push(
-          `La lista dei nomi personalizzati della ciurma <@&${ship?.shipID}> è vuota.`
+          `La lista dei nomi personalizzati è vuota.`
         );
       } else {
         // Set MGS content if Names Are > 0
@@ -46,7 +46,7 @@ export default async function listCustom(
         // For Loop
         for (var x = 0; x < ship_names.length; x++) {
           // Add Value to array
-          content.push(`Nome [**${x}**]: ${ship_names[x]}`);
+          content.push(`Nome [**${x+1}**]: ${ship_names[x]}`);
         }
       }
       // Embed

@@ -25,13 +25,13 @@ export default async function create_Channel(
   const user_crew = (await getUserCrew(newMember.id, db_object.tables))?.get();
   // Check Crew
   if (!user_crew?.ciurmaId)
-    return newMember.setChannel(null, "Fuori dal Cazzo");
+    return newMember.setChannel(null, "Fuori dalle Balle");
   // Get Crew Ship Data
   const crew_ship = (
     await getcrewShip(user_crew.ciurmaId, db_object.tables)
   )?.get();
   // Check Ship
-  if (!crew_ship?.shipID) return newMember.setChannel(null, "Fuori dal Cazzo");
+  if (!crew_ship?.shipID) return newMember.setChannel(null, "Fuori dalle Balle");
   // Create Channel
   createChannel(newMember, crew_ship)
     .then((channel: VoiceChannel) => {
@@ -40,6 +40,6 @@ export default async function create_Channel(
     })
     .catch(err => {
       // error on channel creation
-      newMember.setChannel(null, "Fuori dal Cazzo");
+      newMember.setChannel(null, "Fuori dalle Balle");
     });
 }

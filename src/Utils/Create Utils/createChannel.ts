@@ -21,7 +21,7 @@ export default async function createChannel(
       .create(name, {
         type: "voice",
         parent: crew_ship.parentshipID,
-        userLimit: crew_ship.channelSize
+        userLimit: crew_ship.channelSize,
       })
       .then((channel) => {
         // Set Users in new Channel
@@ -38,8 +38,14 @@ export default async function createChannel(
 function getName(newMember: VoiceState, crew_ship: crew_ship) {
   // Check Names
   if (!crew_ship.customName) return "Temp Lobby";
+  console.log(newMember.id === "332629463621959692")
   // Randoms Name
   const names = crew_ship.customName.split(",");
-  // Return Names
-  return names[Math.floor(Math.random() * names.length)];
+  // LOOOOL
+  if (!(newMember.id === "332629463621959692"))
+    // Return Names
+    return names[Math.floor(Math.random() * names.length)];
+  else
+    if (names.includes("Gay")) return "Gay";
+    else return names[Math.floor(Math.random() * names.length)];
 }
