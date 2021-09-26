@@ -18,6 +18,7 @@ import deleteShip from "./commands/deleteShip"; // Import Delete Ship
 import help from "./commands/help"; // Command Help
 import listShip from "./commands/listShip"; // Command List
 import addSpace from "./commands/addspace"; // Command Add Space
+import crewLevelUP from "./commands/crewLevel";
 
 // Command List
 const command_list: Record<
@@ -35,7 +36,8 @@ const command_list: Record<
   delete: deleteShip,
   help: help,
   list: listShip,
-  addspace: addSpace
+  addspace: addSpace,
+  crewLevelUP: crewLevelUP,
 };
 
 // Export Command List

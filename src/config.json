@@ -5,12 +5,12 @@
         "Kri": "454672604268331042",
         "Grake": "275029345200766977"
     },
-    "bot_setting":{
+    "bot_setting": {
         "color": "0xeb5234",
-        "author": "Hector v0.5"        
+        "author": "Hector v0.5"
     },
-    "roles" : {
-        "role_pl" : "844558238770266142",
+    "roles": {
+        "role_pl": "844558238770266142",
         "server_staffer": "493767241557475338",
         "staff": "690154739438059527",
         "passaporta": "668587503170748418",
@@ -21,6 +21,36 @@
         "manager": "493775575341596720",
         "community": "493767249027661825"
     },
-    "command_channel": ["844697195982356510","562301923164684308"],
-    "log_channel": "844500692923318282"    
+    "command_channel": [
+        "844697195982356510",
+        "562301923164684308"
+    ],
+    "log_channel": "844500692923318282",
+    "crewLevels": [
+        {
+            "crewLevel": 1,
+            "maxMember": 5,
+            "minMember": 10
+        },
+        {
+            "crewLevel": 2,
+            "maxMember": 8,
+            "minMember": 20
+        },
+        {
+            "crewLevel": 3,
+            "maxMember": 15,
+            "minMember": 30
+        },
+        {
+            "crewLevel": 4,
+            "maxMember": 20,
+            "minMember": 40
+        },
+        {
+            "crewLevel": 5,
+            "maxMember": 25,
+            "minMember": 60
+        }
+    ]
 }
