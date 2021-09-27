@@ -46,8 +46,6 @@ export default async function listShip(
         `◾️ Canali Vocali #1: <#${data.fixedChannelsID?.split(",")[0]}>`,
         `◾️ Canali Vocali #2: <#${data.fixedChannelsID?.split(",")[1]}>`,
         `◾️ Canali Vocali #3: <#${data.fixedChannelsID?.split(",")[2]}>`,
-        `◾️ Spazio Canali: **${data.channelSize}**`,
-        `◾️ Nomi personalizzati: ${data.customName}`,
       ].join("\n");
       return content;
     });

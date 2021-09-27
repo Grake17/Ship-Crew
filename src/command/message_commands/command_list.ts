@@ -37,7 +37,7 @@ const command_list: Record<
   help: help,
   list: listShip,
   addspace: addSpace,
-  crewLevelUP: crewLevelUP,
+  crewlevelup: crewLevelUP,
 };
 
 // Export Command List

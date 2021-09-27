@@ -3,7 +3,7 @@
 // ========================================
 
 // Imports
-import { Message, Role } from "discord.js";
+import { Message, MessageEmbed, Role } from "discord.js";
 import { Sequelize } from "sequelize";
 import tables from "../../../db/table_interface";
 import * as config from "../../../config.json";
@@ -21,7 +21,10 @@ interface data {
 
 // function
 
-const sendMessage = (mgs: Message, text: string) => mgs.channel.send(text);
+const sendMessage = (mgs: Message, text: string) => {
+  const embed = new MessageEmbed().setDescription(text);
+  return mgs.channel.send(embed);
+};
 
 const nextLevel = async (data: data) => {
   try {
@@ -31,9 +34,9 @@ const nextLevel = async (data: data) => {
     const crewData = result?.get();
     data.db_obj.tables.crews_table.update(
       {
-        livellociurma: config.crewLevels[crewData!.livellociurma + 1].crewLevel,
-        membrimax: config.crewLevels[crewData!.livellociurma + 1].maxMember,
-        membrimin: config.crewLevels[crewData!.livellociurma + 1].minMember,
+        livellociurma: config.crewLevels[crewData!.livellociurma].crewLevel,
+        membrimax: config.crewLevels[crewData!.livellociurma].maxMember,
+        membrimin: config.crewLevels[crewData!.livellociurma].minMember,
       },
       {
         where: { crewId: crewData!.crewId },
@@ -42,13 +45,13 @@ const nextLevel = async (data: data) => {
     const text = [
       `La ciurma: <@&${crewData?.crewId}> è stata aggiornta al livello successivo!`,
       `Livello ciurma: ${crewData?.livellociurma} ---> ${
-        config.crewLevels[crewData!.livellociurma + 1].crewLevel
+        config.crewLevels[crewData!.livellociurma].crewLevel
       }`,
       `Membri massimi: ${crewData?.membrimax} ---> ${
-        config.crewLevels[crewData!.livellociurma + 1].maxMember
+        config.crewLevels[crewData!.livellociurma].maxMember
       }`,
       `Membri minimi: ${crewData?.membrimax} ---> ${
-        config.crewLevels[crewData!.livellociurma + 1].minMember
+        config.crewLevels[crewData!.livellociurma].minMember
       }`,
     ].join("\n");
     return sendMessage(data.msg, text);

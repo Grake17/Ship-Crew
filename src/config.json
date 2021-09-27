@@ -29,28 +29,28 @@
     "crewLevels": [
         {
             "crewLevel": 1,
-            "maxMember": 5,
-            "minMember": 10
+            "minMember": 5,
+            "maxMember": 10
         },
         {
             "crewLevel": 2,
-            "maxMember": 8,
-            "minMember": 20
+            "minMember": 8,
+            "maxMember": 20
         },
         {
             "crewLevel": 3,
-            "maxMember": 15,
-            "minMember": 30
+            "minMember": 15,
+            "maxMember": 30
         },
         {
             "crewLevel": 4,
-            "maxMember": 20,
-            "minMember": 40
+            "minMember": 20,
+            "maxMember": 40
         },
         {
             "crewLevel": 5,
-            "maxMember": 25,
-            "minMember": 60
+            "minMember": 25,
+            "maxMember": 60
         }
     ]
 }

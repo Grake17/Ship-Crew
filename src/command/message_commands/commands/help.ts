@@ -65,6 +65,9 @@ export default async function (
       ).addField(
         "Comando: Aggiungi Spazio al Canale",
         ">s addspace `numero` @TagCiurma"
+      ).addField(
+        "Comando: Upgrade Ciurma ( Temporaneo )",
+        ">s crewlevelup @TagCiurma"
       );
   // Send embed
   mgs.channel.send(embed);
