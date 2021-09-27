@@ -22,7 +22,10 @@ interface data {
 // function
 
 const sendMessage = (mgs: Message, text: string) => {
-  const embed = new MessageEmbed().setDescription(text);
+  const embed = new MessageEmbed()
+    .setDescription(text)
+    .setColor(config.bot_setting.color)
+    .setAuthor(config.bot_setting.author);
   return mgs.channel.send(embed);
 };
 
@@ -50,7 +53,7 @@ const nextLevel = async (data: data) => {
       `Membri massimi: ${crewData?.membrimax} ---> ${
         config.crewLevels[crewData!.livellociurma].maxMember
       }`,
-      `Membri minimi: ${crewData?.membrimax} ---> ${
+      `Membri minimi: ${crewData?.membrimin} ---> ${
         config.crewLevels[crewData!.livellociurma].minMember
       }`,
     ].join("\n");
