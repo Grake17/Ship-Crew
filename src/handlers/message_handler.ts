@@ -22,8 +22,11 @@ export default async function message_hanlder(
   mgs: Message,
   db_objct: { tables: tables; sequelize: Sequelize }
 ) {
+  // Bot Skip
+  if (mgs.author.bot == true) return;
   // Env Varibles
-  const env = env_var();[">s", "comand"]
+  const env = env_var();
+  [">s", "comand"];
   // Check Channel
   if (!command_channel.includes(mgs.channel.id)) return;
   // Split Message
