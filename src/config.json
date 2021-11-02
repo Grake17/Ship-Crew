@@ -53,7 +53,7 @@
         {
             "crewLevel": 5,
             "minMember": 25,
-            "maxMember": 60
+            "maxMember": 50
         }
     ]
 }
